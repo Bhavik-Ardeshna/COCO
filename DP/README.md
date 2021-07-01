@@ -1,3 +1,3 @@
-## COCO 💻
+## Dynamic Programming 👀
 
 #### Coming soon 🔜

@@ -1,3 +1,0 @@
-## Dynamic Programming 👀
-
-#### Coming soon 🔜
