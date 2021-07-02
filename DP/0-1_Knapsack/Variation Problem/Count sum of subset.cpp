@@ -9,7 +9,7 @@ using namespace std;
 // DP array
 int t[1001][1001];
 
-int Sum_of_Subset_Recursive(vector<int> arr, int tar, int n)
+int Count_Sum_of_Subset_Recursive(vector<int> arr, int tar, int n)
 {
 
     // Base condition
@@ -31,18 +31,16 @@ int Sum_of_Subset_Recursive(vector<int> arr, int tar, int n)
     // Val1<=Tar
     if (arr[n - 1] <= tar)
     {
-        return max(
-            Sum_of_Subset_Recursive(arr, tar - arr[n - 1], n - 1),
-            Sum_of_Subset_Recursive(arr, tar, n - 1));
+        return Count_Sum_of_Subset_Recursive(arr, tar - arr[n - 1], n - 1) + Count_Sum_of_Subset_Recursive(arr, tar, n - 1);
     }
     // Val1>Tar
     else
     {
-        return Sum_of_Subset_Recursive(arr, tar, n - 1);
+        return Count_Sum_of_Subset_Recursive(arr, tar, n - 1);
     }
 }
 
-int Sum_of_Subset_Memiozation(vector<int> arr, int tar, int n)
+int Count_Sum_of_Subset_Memiozation(vector<int> arr, int tar, int n)
 {
     // Base condition
     // Check min i/p
@@ -68,19 +66,18 @@ int Sum_of_Subset_Memiozation(vector<int> arr, int tar, int n)
     // Val1<=Tar
     if (arr[n - 1] <= tar)
     {
-        return t[n][tar] = max(
-                   Sum_of_Subset_Recursive(arr, tar - arr[n - 1], n - 1),
-                   Sum_of_Subset_Recursive(arr, tar, n - 1));
+        return t[n][tar] =
+                   Count_Sum_of_Subset_Memiozation(arr, tar - arr[n - 1], n - 1) + Count_Sum_of_Subset_Memiozation(arr, tar, n - 1);
     }
 
     // Val1>Tar
     else
     {
-        return t[n][tar] = Sum_of_Subset_Recursive(arr, tar, n - 1);
+        return t[n][tar] = Count_Sum_of_Subset_Memiozation(arr, tar, n - 1);
     }
 }
 
-int Sum_of_Subset_Top_Down(vector<int> arr, int tar, int n)
+int Count_Sum_of_Subset_Top_Down(vector<int> arr, int tar, int n)
 {
 
     forr(i, tar)
@@ -97,7 +94,7 @@ int Sum_of_Subset_Top_Down(vector<int> arr, int tar, int n)
         {
 
             if (arr[i - 1] <= j)
-                t[i][j] = t[i - 1][j - arr[i - 1]] || t[i - 1][j];
+                t[i][j] = t[i - 1][j - arr[i - 1]] + t[i - 1][j];
             if (arr[i - 1] > j)
                 t[i][j] = t[i - 1][j];
         }
@@ -108,16 +105,16 @@ int Sum_of_Subset_Top_Down(vector<int> arr, int tar, int n)
 int main()
 {
 
-    vector<int> arr{2, 5, 6, 9, 10};
-    int tar = 7;
+    vector<int> arr{1, 5, 6, 9, 10};
+    int tar = 11;
     int n = 5;
 
-    cout << "Recursive Approach " << Sum_of_Subset_Recursive(arr, tar, n) << endl;
+    cout << "Recursive Approach " << Count_Sum_of_Subset_Recursive(arr, tar, n) << endl;
 
     // memset(t, -1, sizeof(t));
-    // cout << "Memoization Approach " << Sum_of_Subset_Memiozation(arr, tar, n) << endl;
+    // cout << "Memoization Approach " << Count_Sum_of_Subset_Memiozation(arr, tar, n) << endl;
 
-    cout << "Top Down Approach " << Sum_of_Subset_Top_Down(arr, tar, n) << endl;
+    cout << "Top Down Approach " << Count_Sum_of_Subset_Top_Down(arr, tar, n) << endl;
 
     return 0;
 }
