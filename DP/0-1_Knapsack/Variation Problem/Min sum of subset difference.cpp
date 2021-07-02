@@ -13,7 +13,6 @@ int t[1001][1001];
 
 void Sum_of_Subset_Top_Down(vector<int> arr, int tar, int n)
 {
-
     forr(i, tar)
     {
         t[0][i] = false;
