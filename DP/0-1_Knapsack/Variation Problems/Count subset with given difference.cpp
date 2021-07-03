@@ -5,6 +5,17 @@ You want to build an expression out of nums by adding one of the symbols '+' and
 For example, if nums = [2, 1], you can add a '+' before 2 and a '-' before 1 and concatenate them to build the expression "+2-1".
 Return the number of different expressions that you can build, which evaluates to target.*/
 
+/*
+dp[n][sum]
+
+dp[i][j] = 1 if subset sum = j is possible by (1, i) elements, add, sub, skip
+         = 0 subset sum = j not possible
+
+dp[i][j] = dp[i - 1][j]         // skip this element, 
+dp[i][j] |= dp[i - 1][j - a[i]] // add this element
+dp[i][j] |= dp[i - 1][j + a[i]] // subtract this element
+*/
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -19,18 +30,26 @@ int t[1001][1001];
 int CountSumOfSubset(vector<int> arr, int tar, int n)
 {
 
-    if (tar == 0)
-        return 1;
-    if (n == 0)
-        return 0;
+    forr(i, tar)
+    {
+        t[0][i] = false;
+    }
+    forr(i, n)
+    {
+        t[i][0] = true;
+    }
+    forrr(i, n)
+    {
+        forrr(j, tar)
+        {
 
-    if (t[n][tar] != -1)
-        return t[n][tar];
-
-    if (arr[n - 1] <= tar)
-        return CountSumOfSubset(arr, tar - arr[n - 1], n - 1) + CountSumOfSubset(arr, tar, n - 1);
-    else
-        return CountSumOfSubset(arr, tar, n - 1);
+            if (arr[i - 1] <= j)
+                t[i][j] = t[i - 1][j - arr[i - 1]] + t[i - 1][j];
+            if (arr[i - 1] > j)
+                t[i][j] = t[i - 1][j];
+        }
+    }
+    return t[n][tar];
 }
 
 int main()
@@ -38,9 +57,9 @@ int main()
 {
     memset(t, -1, sizeof(t));
     vector<int> arr{
-        1, 1, 1, 1, 1};
-    int n = 5;
-    int diff = 3;
+        2, 3, 5, 1};
+    int n = 3;
+    int diff = 1;
     // Now we need s1-s2 = diff
     // And s1+s2=total_sum
     // In equal we can easly able to find s1 value becauz it's total_sum/2

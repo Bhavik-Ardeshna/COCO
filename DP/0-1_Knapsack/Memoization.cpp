@@ -25,7 +25,7 @@ int knapsack(vector<int> wt, vector<int> val, int W, int n)
     */
 
     // Check that value of state is already is calculated
-    if (t[n][W])
+    if (t[n][W] != -1)
         return t[n][W];
 
     // W1<=W
