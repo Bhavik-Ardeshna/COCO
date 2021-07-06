@@ -11,6 +11,7 @@ int t[1001][1001];
 int longest_common_substring(string x, string y, int n, int m)
 {
     int res = INT_MIN;
+
     forr(i, n + 1)
     {
         forr(j, m + 1)
@@ -20,7 +21,7 @@ int longest_common_substring(string x, string y, int n, int m)
             if (i == 0 || j == 0)
                 t[i][j] = 0;
 
-            //Two case
+            // Two case
             // 1. char match ----- so n-1 and m-1
             // 2. char not match ----- so discontinue from their by initializing with 0
             else if (x[i - 1] == y[j - 1])
