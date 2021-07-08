@@ -6,7 +6,7 @@
 // AS: O(n*m)
 
 // Now to reduce AS we can reduce
-// Here we need to row for further computation
+// Here we need two row for further computation
 // t[2][n]
 #include <bits/stdc++.h>
 using namespace std;
